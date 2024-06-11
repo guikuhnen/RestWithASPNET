@@ -17,6 +17,9 @@ namespace RestWithASPNET
 			var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 			builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 3, 0))));
 
+			builder.Services.AddApiVersioning();
+
+			// Dependency Injection
 			builder.Services.AddScoped<IPersonService, PersonService>();
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

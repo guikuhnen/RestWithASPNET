@@ -1,12 +1,11 @@
 ﻿using RestWithASPNET.Model;
 using RestWithASPNET.Model.Context;
-using System;
 
 namespace RestWithASPNET.Services
 {
 	public class PersonService(MySQLContext context) : IPersonService
 	{
-		private MySQLContext _context = context;
+		private readonly MySQLContext _context = context;
 
 		public Person Create(Person person)
 		{
@@ -25,10 +24,10 @@ namespace RestWithASPNET.Services
 
 		public ICollection<Person> FindAll()
 		{
-			return _context.People.ToList();
+			return [.. _context.People];
 		}
 
-		public Person FindById(long id)
+		public Person? FindById(long id)
 		{
 			return _context.People.SingleOrDefault(p => p.Id.Equals(id));
 		}
