@@ -1,4 +1,5 @@
-
+using Microsoft.EntityFrameworkCore;
+using RestWithASPNET.Model.Context;
 using RestWithASPNET.Services;
 
 namespace RestWithASPNET
@@ -12,6 +13,9 @@ namespace RestWithASPNET
 			// Add services to the container.
 
 			builder.Services.AddControllers();
+
+			var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
+			builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 3, 0))));
 
 			builder.Services.AddScoped<IPersonService, PersonService>();
 

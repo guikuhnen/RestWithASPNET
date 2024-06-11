@@ -1,57 +1,71 @@
 ﻿using RestWithASPNET.Model;
+using RestWithASPNET.Model.Context;
+using System;
 
 namespace RestWithASPNET.Services
 {
-	public class PersonService : IPersonService
+	public class PersonService(MySQLContext context) : IPersonService
 	{
+		private MySQLContext _context = context;
+
 		public Person Create(Person person)
 		{
-			return person;
-		}
-
-		public Person FindById(long id)
-		{
-			return new Person()
+			try
 			{
-				Id = 1,
-				FirstName = "Guilherme",
-				LastName = "Kuhnen",
-				Address = "Blumenau/SC",
-				Gender = "Male"
-			};
+				_context.Add(person);
+				_context.SaveChanges();
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return person;
 		}
 
 		public ICollection<Person> FindAll()
 		{
-			return
-			[
-				new Person()
-				{
-					Id = 1,
-					FirstName = "Guilherme",
-					LastName = "Kuhnen",
-					Address = "Blumenau/SC",
-					Gender = "Male"
-				},
-				new Person()
-				{
-					Id = 2,
-					FirstName = "Guilherme",
-					LastName = "Kuhnen 2",
-					Address = "Indaial/SC",
-					Gender = "Male"
-				}
-			];
+			return _context.People.ToList();
+		}
+
+		public Person FindById(long id)
+		{
+			return _context.People.SingleOrDefault(p => p.Id.Equals(id));
 		}
 
 		public Person Update(Person person)
 		{
-			return person;
+			var exists = FindById(person.Id);
+			if (exists == null)
+				return new Person();
+
+			try
+			{
+				_context.Entry(exists).CurrentValues.SetValues(person);
+				_context.SaveChanges();
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return exists;
 		}
 
 		public void Delete(long id)
 		{
-			// Deletou
+			var person = FindById(id);
+
+			if (person != null)
+				try
+				{
+					_context.People.Remove(person);
+					_context.SaveChanges();
+				}
+				catch (Exception)
+				{
+					throw;
+				}
 		}
 	}
 }
