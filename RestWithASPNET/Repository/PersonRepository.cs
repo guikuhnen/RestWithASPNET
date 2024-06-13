@@ -1,11 +1,11 @@
 ﻿using RestWithASPNET.Model;
 using RestWithASPNET.Model.Context;
 
-namespace RestWithASPNET.Services
+namespace RestWithASPNET.Repository
 {
-	public class PersonService(MySQLContext context) : IPersonService
+	public class PersonRepository(MySQLContext context) : IPersonRepository
 	{
-		private readonly MySQLContext _context = context;
+		private MySQLContext _context = context;
 
 		public Person Create(Person person)
 		{
@@ -27,20 +27,20 @@ namespace RestWithASPNET.Services
 			return [.. _context.People];
 		}
 
-		public Person? FindById(long id)
+		public Person FindById(long id)
 		{
 			return _context.People.SingleOrDefault(p => p.Id.Equals(id));
 		}
 
 		public Person Update(Person person)
 		{
-			var exists = FindById(person.Id);
-			if (exists == null)
+			if (!Exists(person.Id))
 				return new Person();
 
+			var result = FindById(person.Id);
 			try
 			{
-				_context.Entry(exists).CurrentValues.SetValues(person);
+				_context.Entry(result).CurrentValues.SetValues(person);
 				_context.SaveChanges();
 			}
 			catch (Exception)
@@ -48,7 +48,7 @@ namespace RestWithASPNET.Services
 				throw;
 			}
 
-			return exists;
+			return result;
 		}
 
 		public void Delete(long id)
@@ -65,6 +65,11 @@ namespace RestWithASPNET.Services
 				{
 					throw;
 				}
+		}
+
+		public bool Exists(long id)
+		{
+			return _context.People.Any(p => p.Id.Equals(id));
 		}
 	}
 }

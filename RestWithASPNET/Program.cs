@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using RestWithASPNET.Business;
 using RestWithASPNET.Model.Context;
-using RestWithASPNET.Services;
+using RestWithASPNET.Repository;
 
 namespace RestWithASPNET
 {
@@ -20,7 +21,8 @@ namespace RestWithASPNET
 			builder.Services.AddApiVersioning();
 
 			// Dependency Injection
-			builder.Services.AddScoped<IPersonService, PersonService>();
+			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
+			builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();

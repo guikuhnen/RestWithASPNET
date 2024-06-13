@@ -1,17 +1,17 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET.Business;
 using RestWithASPNET.Model;
-using RestWithASPNET.Services;
 
 namespace RestWithASPNET.Controllers
 {
 	[ApiVersion("1")]
 	[ApiController]
 	[Route("api/[controller]/v{version:apiVersion}")]
-	public class PersonController(ILogger<PersonController> logger, IPersonService personService) : ControllerBase
+	public class PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness) : ControllerBase
 	{
 		private readonly ILogger<PersonController> _logger = logger;
-		private readonly IPersonService _personService = personService;
+		private readonly IPersonBusiness _personBusiness = personBusiness;
 
 		[HttpPost]
 		public IActionResult Create([FromBody] Person person)
@@ -19,19 +19,19 @@ namespace RestWithASPNET.Controllers
 			if (person == null)
 				return BadRequest();
 
-			return Ok(_personService.Create(person));
+			return Ok(_personBusiness.Create(person));
 		}
 
 		[HttpGet]
 		public IActionResult Get()
 		{
-			return Ok(_personService.FindAll());
+			return Ok(_personBusiness.FindAll());
 		}
 
 		[HttpGet("{id}")]
 		public IActionResult Get(long id)
 		{
-			var person = _personService.FindById(id);
+			var person = _personBusiness.FindById(id);
 
 			if (person == null)
 				return NotFound();
@@ -45,18 +45,18 @@ namespace RestWithASPNET.Controllers
 			if (person == null)
 				return BadRequest();
 
-			return Ok(_personService.Update(person));
+			return Ok(_personBusiness.Update(person));
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(long id)
 		{
-			var person = _personService.FindById(id);
+			var person = _personBusiness.FindById(id);
 
 			if (person == null)
 				return NotFound();
 
-			_personService.Delete(id);
+			_personBusiness.Delete(id);
 
 			return NoContent();
 		}
