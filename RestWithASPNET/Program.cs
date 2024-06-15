@@ -1,7 +1,10 @@
+using EvolveDb;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using RestWithASPNET.Business;
 using RestWithASPNET.Model.Context;
 using RestWithASPNET.Repository;
+using Serilog;
 
 namespace RestWithASPNET
 {
@@ -20,6 +23,11 @@ namespace RestWithASPNET
 
 			builder.Services.AddApiVersioning();
 
+			// Serilog
+			Log.Logger = new LoggerConfiguration()
+				.WriteTo.Console()
+				.CreateLogger();
+
 			// Dependency Injection
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
 			builder.Services.AddScoped<IPersonRepository, PersonRepository>();
@@ -35,6 +43,8 @@ namespace RestWithASPNET
 			{
 				app.UseSwagger();
 				app.UseSwaggerUI();
+
+				MigrateDatabase(connection);
 			}
 
 			app.UseHttpsRedirection();
@@ -45,6 +55,25 @@ namespace RestWithASPNET
 			app.MapControllers();
 
 			app.Run();
+		}
+
+		private static void MigrateDatabase(string connection)
+		{
+			try
+			{
+				var evolveConnection = new MySqlConnection(connection);
+				var evolve = new Evolve(evolveConnection, Log.Information)
+				{
+					Locations = ["db/migrations", "db/dataset"],
+					IsEraseDisabled = true
+				};
+				evolve.Migrate();
+			}
+			catch (Exception ex)
+			{
+				Log.Error("Database migration failed.", ex);
+				throw;
+			}
 		}
 	}
 }

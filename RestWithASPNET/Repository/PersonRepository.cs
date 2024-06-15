@@ -35,7 +35,7 @@ namespace RestWithASPNET.Repository
 		public Person Update(Person person)
 		{
 			if (!Exists(person.Id))
-				return new Person();
+				return null;
 
 			var result = FindById(person.Id);
 			try
