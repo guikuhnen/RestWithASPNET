@@ -32,6 +32,9 @@ namespace RestWithASPNET
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
 			builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
+			builder.Services.AddScoped<IBookBusiness, BookBusiness>();
+			builder.Services.AddScoped<IBookRepository, BookRepository>();
+
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();

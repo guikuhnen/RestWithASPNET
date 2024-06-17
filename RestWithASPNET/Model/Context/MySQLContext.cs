@@ -9,5 +9,6 @@ namespace RestWithASPNET.Model.Context
 		public MySQLContext(DbContextOptions<MySQLContext> options) : base(options) { }
 
 		public DbSet<Person> People { get; set; }
+		public DbSet<Book> Books { get; set; }
 	}
 }

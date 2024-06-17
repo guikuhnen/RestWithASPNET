@@ -23,7 +23,7 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get()
+		public IActionResult GetAll()
 		{
 			return Ok(_personBusiness.FindAll());
 		}
