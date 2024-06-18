@@ -4,6 +4,7 @@ using MySqlConnector;
 using RestWithASPNET.Business;
 using RestWithASPNET.Model.Context;
 using RestWithASPNET.Repository;
+using RestWithASPNET.Repository.Base;
 using Serilog;
 
 namespace RestWithASPNET
@@ -29,11 +30,9 @@ namespace RestWithASPNET
 				.CreateLogger();
 
 			// Dependency Injection
+			builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
-			builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-
 			builder.Services.AddScoped<IBookBusiness, BookBusiness>();
-			builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();

@@ -6,8 +6,8 @@ namespace RestWithASPNET.Business
     {
         Person Create(Person person);
         ICollection<Person> FindAll();
-		Person FindById(long id);
-		Person Update(Person person);
+		Person? FindById(long id);
+		Person? Update(Person person);
         void Delete(long id);
     }
 }

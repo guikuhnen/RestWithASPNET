@@ -1,11 +1,11 @@
 ﻿using RestWithASPNET.Model;
-using RestWithASPNET.Repository;
+using RestWithASPNET.Repository.Base;
 
 namespace RestWithASPNET.Business
 {
-	public class PersonBusiness(IPersonRepository repository) : IPersonBusiness
+	public class PersonBusiness(IBaseRepository<Person> repository) : IPersonBusiness
 	{
-		private readonly IPersonRepository _repository = repository;
+		private readonly IBaseRepository<Person> _repository = repository;
 
 		public Person Create(Person person)
 		{
@@ -17,12 +17,12 @@ namespace RestWithASPNET.Business
 			return _repository.FindAll();
 		}
 
-		public Person FindById(long id)
+		public Person? FindById(long id)
 		{
 			return _repository.FindById(id);
 		}
 
-		public Person Update(Person person)
+		public Person? Update(Person person)
 		{
 			return _repository.Update(person);
 		}

@@ -16,7 +16,9 @@ namespace RestWithASPNET.Controllers
 		[HttpPost]
 		public IActionResult Create([FromBody] Book book)
 		{
-			if (book == null) return BadRequest();
+			if (book == null) 
+                return BadRequest();
+
 			return Ok(_bookBusiness.Create(book));
 		}
 
@@ -30,22 +32,31 @@ namespace RestWithASPNET.Controllers
         public IActionResult Get(long id)
         {
             var book = _bookBusiness.FindById(id);
-            if (book == null) return NotFound();
+
+            if (book == null) 
+                return NotFound();
+
             return Ok(book);
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] Book book)
         {
-            if (book == null) return BadRequest();
+            if (book == null) 
+                return BadRequest();
+
             return Ok(_bookBusiness.Update(book));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
-        {
-            _bookBusiness.Delete(id);
-            return NoContent();
+		{
+			var book = _bookBusiness.FindById(id);
+
+			if (book == null)
+				return NotFound();
+
+			return NoContent();
         }
     }
 }

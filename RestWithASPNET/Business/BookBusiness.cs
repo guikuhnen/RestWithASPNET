@@ -1,11 +1,11 @@
 ﻿using RestWithASPNET.Model;
-using RestWithASPNET.Repository;
+using RestWithASPNET.Repository.Base;
 
 namespace RestWithASPNET.Business
 {
-	public class BookBusiness(IBookRepository repository) : IBookBusiness
+	public class BookBusiness(IBaseRepository<Book> repository) : IBookBusiness
     {
-        private readonly IBookRepository _repository = repository;
+        private readonly IBaseRepository<Book> _repository = repository;
 
 		public Book Create(Book book)
 		{
@@ -17,12 +17,12 @@ namespace RestWithASPNET.Business
             return _repository.FindAll();
         }
 
-        public Book FindById(long id)
+        public Book? FindById(long id)
         {
             return _repository.FindById(id);
         }
 
-        public Book Update(Book book)
+        public Book? Update(Book book)
         {
             return _repository.Update(book);
         }

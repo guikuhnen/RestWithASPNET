@@ -6,8 +6,8 @@ namespace RestWithASPNET.Business
     {
         Book Create(Book book);
 		ICollection<Book> FindAll();
-		Book FindById(long id);
-        Book Update(Book book);
+		Book? FindById(long id);
+        Book? Update(Book book);
         void Delete(long id);
     }
 }
