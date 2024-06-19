@@ -1,4 +1,6 @@
-﻿using RestWithASPNET.Model;
+﻿using RestWithASPNET.Data.Converter.Business;
+using RestWithASPNET.Data.VO;
+using RestWithASPNET.Model;
 using RestWithASPNET.Repository.Base;
 
 namespace RestWithASPNET.Business
@@ -6,25 +8,39 @@ namespace RestWithASPNET.Business
 	public class PersonBusiness(IBaseRepository<Person> repository) : IPersonBusiness
 	{
 		private readonly IBaseRepository<Person> _repository = repository;
+		private readonly PersonConverter _converter = new();
 
-		public Person Create(Person person)
+		public PersonVO Create(PersonVO person)
 		{
-			return _repository.Create(person);
+			var personEntity = _converter.Parse(person);
+
+			personEntity = _repository.Create(personEntity);
+
+			return _converter.Parse(personEntity);
 		}
 
-		public ICollection<Person> FindAll()
+		public ICollection<PersonVO> FindAll()
 		{
-			return _repository.FindAll();
+			return _converter.Parse(_repository.FindAll());
 		}
 
-		public Person? FindById(long id)
+		public PersonVO FindById(long id)
 		{
-			return _repository.FindById(id);
+			var person = _repository.FindById(id);
+
+			if (person != null)
+				return _converter.Parse(person);
+
+			return null;
 		}
 
-		public Person? Update(Person person)
+		public PersonVO Update(PersonVO person)
 		{
-			return _repository.Update(person);
+			var personEntity = _converter.Parse(person);
+
+			personEntity = _repository.Update(personEntity);
+
+			return _converter.Parse(personEntity);
 		}
 
 		public void Delete(long id)

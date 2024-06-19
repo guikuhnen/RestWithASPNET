@@ -35,12 +35,12 @@ namespace RestWithASPNET.Repository.Base
 			return [.. _dbSet];
 		}
 
-		public T? FindById(long id)
+		public T FindById(long id)
 		{
 			return _dbSet.SingleOrDefault(p => p.Id.Equals(id));
 		}
 
-		public T? Update(T obj)
+		public T Update(T obj)
 		{
 			var result = FindById(obj.Id);
 			if (result != null)

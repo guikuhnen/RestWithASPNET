@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
-using RestWithASPNET.Model;
+using RestWithASPNET.Data.VO;
 
 namespace RestWithASPNET.Controllers
 {
@@ -14,7 +14,7 @@ namespace RestWithASPNET.Controllers
         private readonly IBookBusiness _bookBusiness = bookBusiness;
 
 		[HttpPost]
-		public IActionResult Create([FromBody] Book book)
+		public IActionResult Create([FromBody] BookVO book)
 		{
 			if (book == null) 
                 return BadRequest();
@@ -40,7 +40,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book book)
+        public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null) 
                 return BadRequest();

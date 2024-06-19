@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using RestWithASPNET.Business;
 using RestWithASPNET.Model.Context;
-using RestWithASPNET.Repository;
 using RestWithASPNET.Repository.Base;
 using Serilog;
 

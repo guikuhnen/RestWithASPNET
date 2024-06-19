@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
-using RestWithASPNET.Model;
+using RestWithASPNET.Data.VO;
 
 namespace RestWithASPNET.Controllers
 {
@@ -14,7 +14,7 @@ namespace RestWithASPNET.Controllers
 		private readonly IPersonBusiness _personBusiness = personBusiness;
 
 		[HttpPost]
-		public IActionResult Create([FromBody] Person person)
+		public IActionResult Create([FromBody] PersonVO person)
 		{
 			if (person == null)
 				return BadRequest();
@@ -40,7 +40,7 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Update([FromBody] Person person)
+		public IActionResult Update([FromBody] PersonVO person)
 		{
 			if (person == null)
 				return BadRequest();

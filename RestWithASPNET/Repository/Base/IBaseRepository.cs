@@ -6,8 +6,8 @@ namespace RestWithASPNET.Repository.Base
 	{
 		T Create(T obj);
 		ICollection<T> FindAll();
-		T? FindById(long id);
-		T? Update(T obj);
+		T FindById(long id);
+		T Update(T obj);
 		void Delete(long id);
 		bool Exists(long id);
 	}
