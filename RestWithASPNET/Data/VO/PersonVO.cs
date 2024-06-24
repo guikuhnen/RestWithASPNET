@@ -1,11 +1,16 @@
-﻿namespace RestWithASPNET.Data.VO
+﻿using System.Text.Json.Serialization;
+
+namespace RestWithASPNET.Data.VO
 {
 	public class PersonVO
 	{
 		public long Id { get; set; }
+		[JsonPropertyName("first_name")]
 		public string? FirstName { get; set; }
+		[JsonPropertyName("last_name")]
 		public string? LastName { get; set; }
 		public string? Address { get; set; }
+		[JsonIgnore]
 		public string? Gender { get; set; }
 	}
 }
