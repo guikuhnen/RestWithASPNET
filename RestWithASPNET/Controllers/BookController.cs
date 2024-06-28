@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
+using RestWithASPNET.Hypermedia.Filters;
 
 namespace RestWithASPNET.Controllers
 {
@@ -14,6 +15,7 @@ namespace RestWithASPNET.Controllers
         private readonly IBookBusiness _bookBusiness = bookBusiness;
 
 		[HttpPost]
+		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Create([FromBody] BookVO book)
 		{
 			if (book == null) 
@@ -23,13 +25,15 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpGet]
-        public IActionResult GetAll()
+		[TypeFilter(typeof(HyperMediaFilter))]
+		public IActionResult GetAll()
         {
             return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+		[TypeFilter(typeof(HyperMediaFilter))]
+		public IActionResult Get(long id)
         {
             var book = _bookBusiness.FindById(id);
 
@@ -40,7 +44,8 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] BookVO book)
+		[TypeFilter(typeof(HyperMediaFilter))]
+		public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null) 
                 return BadRequest();

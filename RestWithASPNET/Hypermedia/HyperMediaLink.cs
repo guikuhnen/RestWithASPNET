@@ -15,7 +15,7 @@ namespace RestWithASPNET.Hypermedia
 				lock (_lock)
 				{
 					StringBuilder sb = new(_href);
-					return sb.Replace("%2f", "/").ToString();
+					return sb.Replace("%2F", "/").ToString();
 				}
 			}
 			set { _href = value; }

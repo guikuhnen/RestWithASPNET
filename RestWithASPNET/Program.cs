@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using MySqlConnector;
 using RestWithASPNET.Business;
+using RestWithASPNET.Hypermedia.Enricher;
+using RestWithASPNET.Hypermedia.Filters;
 using RestWithASPNET.Model.Context;
 using RestWithASPNET.Repository.Base;
 using Serilog;
@@ -28,6 +30,12 @@ namespace RestWithASPNET
 				options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
 				options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
 			}).AddXmlSerializerFormatters();
+
+			var filterOptions = new HyperMediaFilterOptions();
+			filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+			filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+			builder.Services.AddSingleton(filterOptions);
 
 			builder.Services.AddApiVersioning();
 
@@ -61,6 +69,7 @@ namespace RestWithASPNET
 			app.UseAuthorization();
 
 			app.MapControllers();
+			app.MapControllerRoute("DefaultApi", "{controller=values}/v{version=apiVersion}/{id?}");
 
 			app.Run();
 		}
