@@ -15,6 +15,9 @@ namespace RestWithASPNET.Controllers
 		private readonly IPersonBusiness _personBusiness = personBusiness;
 
 		[HttpPost]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Create([FromBody] PersonVO person)
 		{
@@ -25,6 +28,8 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpGet]
+		[ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult GetAll()
 		{
@@ -32,6 +37,9 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Get(long id)
 		{
@@ -44,6 +52,9 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpPut]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Update([FromBody] PersonVO person)
 		{
@@ -54,6 +65,9 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
 		public IActionResult Delete(long id)
 		{
 			var person = _personBusiness.FindById(id);

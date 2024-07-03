@@ -1,6 +1,7 @@
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using RestWithASPNET.Business;
 using RestWithASPNET.Hypermedia.Enricher;
@@ -16,9 +17,19 @@ namespace RestWithASPNET
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+			var appName = "Rest with ASP.NET";
+			var appVersion = "v1";
 
 			// Add services to the container.
 
+			builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+			{
+				policy.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader();
+			}));
+
+			builder.Services.AddRouting(options => options.LowercaseUrls = true);
 			builder.Services.AddControllers();
 
 			var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
@@ -51,7 +62,21 @@ namespace RestWithASPNET
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
+			builder.Services.AddSwaggerGen(options =>
+			{
+				options.SwaggerDoc(appVersion,
+					new OpenApiInfo
+					{
+						Title = appName,
+						Version = appVersion,
+						Description = "API RESTFul developed in course 'REST API's RESTFul do 0 à Azure com ASP.NET 8 e 5 e Docker'",
+						Contact = new OpenApiContact
+						{
+							Name = "Guilherme Kuhnen",
+							Url = new Uri("https://github.com/guikuhnen")
+						}
+					});
+			});
 
 			var app = builder.Build();
 
@@ -65,6 +90,8 @@ namespace RestWithASPNET
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseCors();
 
 			app.UseAuthorization();
 

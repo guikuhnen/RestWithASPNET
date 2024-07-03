@@ -15,6 +15,9 @@ namespace RestWithASPNET.Controllers
         private readonly IBookBusiness _bookBusiness = bookBusiness;
 
 		[HttpPost]
+		[ProducesResponseType(200, Type = typeof(BookVO))]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Create([FromBody] BookVO book)
 		{
@@ -25,6 +28,8 @@ namespace RestWithASPNET.Controllers
 		}
 
 		[HttpGet]
+		[ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult GetAll()
         {
@@ -32,6 +37,9 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet("{id}")]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Get(long id)
         {
@@ -44,6 +52,9 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
 		public IActionResult Update([FromBody] BookVO book)
         {
@@ -54,7 +65,10 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
+		public IActionResult Delete(long id)
 		{
 			var book = _bookBusiness.FindById(id);
 
