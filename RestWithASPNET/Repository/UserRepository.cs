@@ -7,16 +7,11 @@ using System.Text;
 
 namespace RestWithASPNET.Repository
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository(MySQLContext context) : IUserRepository
 	{
-		private readonly MySQLContext _context;
+		private readonly MySQLContext _context = context;
 
-        public UserRepository(MySQLContext context)
-        {
-            _context = context;
-        }
-
-        public User? ValidateCredentials(UserVO user)
+		public User? ValidateCredentials(UserVO user)
 		{
 			var pass = ComputeHash(user.Password, SHA256.Create());
 
@@ -24,9 +19,9 @@ namespace RestWithASPNET.Repository
 						(u.UserName == user.UserName) && (u.Password == pass));
 		}
 
-		private string ComputeHash(string input, HashAlgorithm hashAlgorithm)
+		private static string ComputeHash(string input, HashAlgorithm hashAlgorithm)
 		{
-			Byte[] hashedBytes = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+			var hashedBytes = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
 
 			var sBuilder = new StringBuilder();
 
