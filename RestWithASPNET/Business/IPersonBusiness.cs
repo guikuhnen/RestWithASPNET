@@ -6,7 +6,7 @@ namespace RestWithASPNET.Business
     {
         PersonVO Create(PersonVO person);
         ICollection<PersonVO> FindAll();
-		PersonVO FindById(long id);
+		PersonVO? FindById(long id);
 		PersonVO Update(PersonVO person);
         void Delete(long id);
     }

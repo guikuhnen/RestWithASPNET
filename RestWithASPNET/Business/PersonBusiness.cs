@@ -24,7 +24,7 @@ namespace RestWithASPNET.Business
 			return _converter.Parse(_repository.FindAll());
 		}
 
-		public PersonVO FindById(long id)
+		public PersonVO? FindById(long id)
 		{
 			var person = _repository.FindById(id);
 

@@ -1,14 +1,22 @@
 using EvolveDb;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using RestWithASPNET.Business;
+using RestWithASPNET.Configurations;
 using RestWithASPNET.Hypermedia.Enricher;
 using RestWithASPNET.Hypermedia.Filters;
 using RestWithASPNET.Model.Context;
+using RestWithASPNET.Repository;
 using RestWithASPNET.Repository.Base;
+using RestWithASPNET.Services;
 using Serilog;
+using System.Text;
 
 namespace RestWithASPNET
 {
@@ -20,7 +28,36 @@ namespace RestWithASPNET
 			var appName = "Rest with ASP.NET";
 			var appVersion = "v1";
 
+			var tokenConfigurations = new TokenConfiguration();
+			new ConfigureFromConfigurationOptions<TokenConfiguration>(builder.Configuration.GetSection("TokenConfigurations"))
+				.Configure(tokenConfigurations);
+
 			// Add services to the container.
+			builder.Services.AddSingleton(tokenConfigurations);
+
+			// Authentication
+			builder.Services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new()
+				{
+					ValidateIssuer = true,
+					ValidateAudience = true,
+					ValidateLifetime = true,
+					ValidateIssuerSigningKey = true,
+					ValidIssuer = tokenConfigurations.Issuer,
+					ValidAudience = tokenConfigurations.Audience,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
+				};
+			});
+			builder.Services.AddAuthorizationBuilder().AddPolicy("Bearer",
+				new AuthorizationPolicyBuilder().AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+					.RequireAuthenticatedUser()
+					.Build()
+			);
 
 			builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 			{
@@ -56,6 +93,11 @@ namespace RestWithASPNET
 				.CreateLogger();
 
 			// Dependency Injection
+			//// Authentication
+			builder.Services.AddTransient<ITokenService, TokenService>();
+			builder.Services.AddTransient<ILoginBusiness, LoginBusiness>();
+			builder.Services.AddTransient<IUserRepository, UserRepository>();
+			//// Business
 			builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
 			builder.Services.AddScoped<IBookBusiness, BookBusiness>();
@@ -86,7 +128,8 @@ namespace RestWithASPNET
 				app.UseSwagger();
 				app.UseSwaggerUI();
 
-				MigrateDatabase(connection);
+				if (!string.IsNullOrWhiteSpace(connection))
+					MigrateDatabase(connection);
 			}
 
 			app.UseHttpsRedirection();

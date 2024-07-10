@@ -9,7 +9,7 @@ namespace RestWithASPNET.Repository
 {
 	public class UserRepository(MySQLContext context) : IUserRepository
 	{
-		private readonly MySQLContext _context = context;
+		private MySQLContext _context = context;
 
 		public User? ValidateCredentials(UserVO user)
 		{
