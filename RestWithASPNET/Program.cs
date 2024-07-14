@@ -52,6 +52,7 @@ namespace RestWithASPNET
 					ValidateAudience = true,
 					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
+					ClockSkew = TimeSpan.Zero,
 					ValidIssuer = tokenConfigurations.Issuer,
 					ValidAudience = tokenConfigurations.Audience,
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
