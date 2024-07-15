@@ -42,6 +42,13 @@ namespace RestWithASPNET.Hypermedia.Enricher
 				Rel = RelationType.self,
 				Type = "int"
 			});
+			content.Links.Add(new HyperMediaLink()
+			{
+				Action = HttpActionVerb.PATCH,
+				Href = link,
+				Rel = RelationType.self,
+				Type = ResponseTypeFormat.DefaultPatch
+			});
 
 			return Task.CompletedTask;
 		}
@@ -50,7 +57,7 @@ namespace RestWithASPNET.Hypermedia.Enricher
 		{
 			lock (_lock)
 			{
-				var url = new { controller = path, id = id };
+				var url = new { controller = path, id };
 				return new StringBuilder(urlHelper.Link("DefaultApi", url)).Replace("%2F", "/").ToString();
 			};
 		}

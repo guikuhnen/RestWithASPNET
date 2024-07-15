@@ -50,7 +50,7 @@ namespace RestWithASPNET.Hypermedia.Enricher
 		{
 			lock (_lock)
 			{
-				var url = new { controller = path, id = id };
+				var url = new { controller = path, id };
 				return new StringBuilder(urlHelper.Link("DefaultApi", url)).Replace("%2F", "/").ToString();
 			};
 		}

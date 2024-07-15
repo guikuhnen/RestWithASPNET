@@ -81,5 +81,20 @@ namespace RestWithASPNET.Controllers
 
 			return NoContent();
 		}
+
+		[HttpPatch("{id}")]
+		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
+		[TypeFilter(typeof(HyperMediaFilter))]
+		public IActionResult Patch(long id)
+		{
+			var person = _personBusiness.SetStatus(id);
+
+			if (person == null)
+				return NotFound();
+
+			return Ok(person);
+		}
 	}
 }

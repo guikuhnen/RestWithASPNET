@@ -19,7 +19,8 @@ namespace RestWithASPNET.Data.Converter.Business
 				FirstName = origin.FirstName,
 				LastName = origin.LastName,
 				Address = origin.Address,
-				Gender = origin.Gender
+				Gender = origin.Gender,
+				Enabled = origin.Enabled
 			};
 		}
 
@@ -46,7 +47,8 @@ namespace RestWithASPNET.Data.Converter.Business
 				FirstName = origin.FirstName,
 				LastName = origin.LastName,
 				Address = origin.Address,
-				Gender = origin.Gender
+				Gender = origin.Gender,
+				Enabled = origin.Enabled
 			};
 		}
 

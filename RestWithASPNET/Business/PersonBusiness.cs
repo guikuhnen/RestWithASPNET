@@ -1,13 +1,13 @@
 ﻿using RestWithASPNET.Data.Converter.Business;
 using RestWithASPNET.Data.VO;
 using RestWithASPNET.Model;
-using RestWithASPNET.Repository.Base;
+using RestWithASPNET.Repository;
 
 namespace RestWithASPNET.Business
 {
-	public class PersonBusiness(IBaseRepository<Person> repository) : IPersonBusiness
+	public class PersonBusiness(IPersonRepository repository) : IPersonBusiness
 	{
-		private readonly IBaseRepository<Person> _repository = repository;
+		private readonly IPersonRepository _repository = repository;
 		private readonly PersonConverter _converter = new();
 
 		public PersonVO Create(PersonVO person)
@@ -46,6 +46,16 @@ namespace RestWithASPNET.Business
 		public void Delete(long id)
 		{
 			_repository.Delete(id);
+		}
+
+		public PersonVO? SetStatus(long id)
+		{
+			var personEntity = _repository.SetStatus(id);
+
+			if (personEntity == null)
+				return null;
+
+			return _converter.Parse(personEntity);
 		}
 	}
 }

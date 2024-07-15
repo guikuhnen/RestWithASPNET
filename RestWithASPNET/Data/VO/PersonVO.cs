@@ -19,6 +19,8 @@ namespace RestWithASPNET.Data.VO
 		[JsonIgnore]
 		public string? Gender { get; set; }
 
+		public bool Enabled { get; set; }
+
 		public ICollection<HyperMediaLink> Links { get; set; } = [];
 	}
 }

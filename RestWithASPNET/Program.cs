@@ -104,6 +104,7 @@ namespace RestWithASPNET
 			builder.Services.AddTransient<IUserRepository, UserRepository>();
 			//// Business
 			builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+			builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
 			builder.Services.AddScoped<IBookBusiness, BookBusiness>();
 

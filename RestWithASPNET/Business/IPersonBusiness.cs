@@ -9,5 +9,6 @@ namespace RestWithASPNET.Business
 		PersonVO? FindById(long id);
 		PersonVO Update(PersonVO person);
         void Delete(long id);
-    }
+		PersonVO? SetStatus(long id);
+	}
 }

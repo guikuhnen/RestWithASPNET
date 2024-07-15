@@ -6,7 +6,7 @@ namespace RestWithASPNET.Repository.Base
 {
 	public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 	{
-		private MySQLContext _context;
+		protected MySQLContext _context;
 		private DbSet<T> _dbSet;
 
 		public BaseRepository(MySQLContext context)
