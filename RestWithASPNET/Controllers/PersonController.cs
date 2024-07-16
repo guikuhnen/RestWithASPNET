@@ -96,5 +96,21 @@ namespace RestWithASPNET.Controllers
 
 			return Ok(person);
 		}
+
+
+		[HttpGet("findPersonByName")]
+		[ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
+		[TypeFilter(typeof(HyperMediaFilter))]
+		public IActionResult FindPersonByName([FromQuery]string? firstName, [FromQuery]string? lastName)
+		{
+			var people = _personBusiness.FindAllByName(firstName, lastName);
+
+			if (people == null)
+				return NotFound();
+
+			return Ok(people);
+		}
 	}
 }

@@ -54,7 +54,7 @@ namespace RestWithASPNET.Data.Converter.Business
 
 		public ICollection<PersonVO> Parse(ICollection<Person> origin)
 		{
-			if (origin == null)
+			if (origin?.Count == 0)
 				return null;
 
 			return origin.Select(Parse).ToList();

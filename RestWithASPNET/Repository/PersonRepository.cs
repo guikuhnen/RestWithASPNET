@@ -27,5 +27,20 @@ namespace RestWithASPNET.Repository
 
 			return user;
 		}
+		public ICollection<Person> FindAllByName(string firstName, string lastName)
+		{
+			if (firstName == null && lastName == null)
+				return null;
+
+			var people = _context.People.AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(firstName))
+				people = people.Where(p => p.FirstName.Contains(firstName));
+
+			if (!string.IsNullOrWhiteSpace(lastName))
+				people = people.Where(p => p.LastName.Contains(lastName));
+
+			return [.. people];
+		}
 	}
 }

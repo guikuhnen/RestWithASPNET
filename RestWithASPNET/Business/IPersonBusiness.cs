@@ -1,4 +1,5 @@
 ﻿using RestWithASPNET.Data.VO;
+using RestWithASPNET.Model;
 
 namespace RestWithASPNET.Business
 {
@@ -10,5 +11,6 @@ namespace RestWithASPNET.Business
 		PersonVO Update(PersonVO person);
         void Delete(long id);
 		PersonVO? SetStatus(long id);
+		ICollection<PersonVO> FindAllByName(string firstName, string lastName);
 	}
 }

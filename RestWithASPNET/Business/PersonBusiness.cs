@@ -57,5 +57,10 @@ namespace RestWithASPNET.Business
 
 			return _converter.Parse(personEntity);
 		}
+
+		public ICollection<PersonVO> FindAllByName(string firstName, string lastName)
+		{
+			return _converter.Parse(_repository.FindAllByName(firstName, lastName));
+		}
 	}
 }
