@@ -10,5 +10,7 @@ namespace RestWithASPNET.Repository.Base
 		T Update(T obj);
 		void Delete(long id);
 		bool Exists(long id);
+		ICollection<T> FindAllWithPagedSearch(string query);
+		int GetCount(string query);
 	}
 }

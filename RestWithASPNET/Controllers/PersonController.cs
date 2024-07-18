@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
 using RestWithASPNET.Hypermedia.Filters;
+using RestWithASPNET.Hypermedia.Utils;
 
 namespace RestWithASPNET.Controllers
 {
@@ -29,13 +30,13 @@ namespace RestWithASPNET.Controllers
 			return Ok(_personBusiness.Create(person));
 		}
 
-		[HttpGet]
-		[ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+		[HttpGet("{sortDirection}/{pageSize}/{currentPage}")]
+		[ProducesResponseType(200, Type = typeof(PagedSearchVO<PersonVO>))]
 		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
-		public IActionResult GetAll()
+		public IActionResult GetAll([FromQuery] string? name, string sortDirection, int pageSize, int currentPage)
 		{
-			return Ok(_personBusiness.FindAll());
+			return Ok(_personBusiness.FindAllWithPagedSearch(name, sortDirection, pageSize, currentPage));
 		}
 
 		[HttpGet("{id}")]

@@ -78,5 +78,28 @@ namespace RestWithASPNET.Repository.Base
 		{
 			return _dbSet.Any(p => p.Id.Equals(id));
 		}
+
+		public ICollection<T> FindAllWithPagedSearch(string query)
+		{
+			return [.._dbSet.FromSqlRaw<T>(query)];
+		}
+
+		public int GetCount(string query)
+		{
+			var result = "";
+
+			using (var connection = _context.Database.GetDbConnection())
+			{
+				connection.Open();
+
+				using var command = connection.CreateCommand();
+				command.CommandText = query;
+				result = command.ExecuteScalar()?.ToString();
+			}
+
+			_ = int.TryParse(result, out int value);
+
+			return value;
+		}
 	}
 }
