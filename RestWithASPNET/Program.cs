@@ -2,6 +2,7 @@ using EvolveDb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
@@ -98,6 +99,7 @@ namespace RestWithASPNET
 				.CreateLogger();
 
 			// Dependency Injection
+			builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			//// Authentication
 			builder.Services.AddTransient<ITokenService, TokenService>();
 			builder.Services.AddTransient<ILoginBusiness, LoginBusiness>();
@@ -107,6 +109,7 @@ namespace RestWithASPNET
 			builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 			builder.Services.AddScoped<IPersonBusiness, PersonBusiness>();
 			builder.Services.AddScoped<IBookBusiness, BookBusiness>();
+			builder.Services.AddScoped<IFileBusiness, FileBusiness>();
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
