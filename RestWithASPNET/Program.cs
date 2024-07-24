@@ -162,8 +162,8 @@ namespace RestWithASPNET
 				app.UseSwagger();
 				app.UseSwaggerUI();
 
-				if (!string.IsNullOrWhiteSpace(connection))
-					MigrateDatabase(connection);
+				/*if (!string.IsNullOrWhiteSpace(connection))
+					MigrateDatabase(connection);*/
 			}
 
 			app.UseHttpsRedirection();
