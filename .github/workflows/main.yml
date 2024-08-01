@@ -1,9 +1,6 @@
 name: RestWithASPNET | Continuous Integration with Github Actions
 
-on:
-  push:
-    paths:
-      - RestWithASPNET/**
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
