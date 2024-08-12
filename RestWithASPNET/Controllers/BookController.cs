@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
 using RestWithASPNET.Hypermedia.Filters;
+using RestWithASPNET.Hypermedia.Utils;
+using System.Xml.Linq;
 
 namespace RestWithASPNET.Controllers
 {
@@ -29,17 +31,17 @@ namespace RestWithASPNET.Controllers
 			return Ok(_bookBusiness.Create(book));
 		}
 
-		[HttpGet]
-		[ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+		[HttpGet("{sortDirection}/{pageSize}/{currentPage}")]
+		[ProducesResponseType(200, Type = typeof(PagedSearchVO<BookVO>))]
 		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
-		public IActionResult GetAll()
-        {
-            return Ok(_bookBusiness.FindAll());
+		public IActionResult GetAll([FromQuery] string? title, string sortDirection, int pageSize, int currentPage)
+		{
+            return Ok(_bookBusiness.FindAllWithPagedSearch(title, sortDirection, pageSize, currentPage));
         }
 
         [HttpGet("{id}")]
-		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(200, Type = typeof(BookVO))]
 		[ProducesResponseType(404)]
 		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
@@ -54,7 +56,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpPut]
-		[ProducesResponseType(200, Type = typeof(PersonVO))]
+		[ProducesResponseType(200, Type = typeof(BookVO))]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(500)]
 		[TypeFilter(typeof(HyperMediaFilter))]
