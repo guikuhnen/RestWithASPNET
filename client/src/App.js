@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Header from './Header';
 
 export default function App() {
+  const [counter, setCounter] = useState(0);
+
+  function increment() {
+    setCounter(counter + 1);
+  }
+
   return (
-    <h1>Hello World!</h1>
+    <div>
+      <Header>
+        Counter: {counter}
+      </Header>
+      <button onClick={increment}>Add</button>
+    </div>
   );
 }
