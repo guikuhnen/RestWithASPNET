@@ -79,6 +79,8 @@ namespace RestWithASPNET.Controllers
 			if (book == null)
 				return NotFound();
 
+			_bookBusiness.Delete(id);
+
 			return NoContent();
         }
     }

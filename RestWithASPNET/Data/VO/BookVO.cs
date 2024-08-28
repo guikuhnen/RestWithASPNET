@@ -14,7 +14,7 @@ namespace RestWithASPNET.Data.VO
 
 		public decimal Price { get; set; }
 
-		[JsonPropertyName("launch_date")]
+		[JsonPropertyName("launchDate")]
 		public DateTime LaunchDate { get; set; }
 
 		public ICollection<HyperMediaLink> Links { get; set; } = [];
