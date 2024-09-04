@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Business;
 using RestWithASPNET.Data.VO;
-using RestWithASPNET.Hypermedia.Filters;
+using RestWithASPNET.HATEOAS.Hypermedia.Filters;
 using RestWithASPNET.Model;
 
 namespace RestWithASPNET.Controllers

@@ -1,5 +1,5 @@
 ﻿using RestWithASPNET.Data.VO;
-using RestWithASPNET.Hypermedia.Utils;
+using RestWithASPNET.HATEOAS.Hypermedia.Utils;
 using RestWithASPNET.Model;
 
 namespace RestWithASPNET.Business

@@ -1,5 +1,5 @@
-﻿using RestWithASPNET.Hypermedia;
-using RestWithASPNET.Hypermedia.Abstract;
+﻿using RestWithASPNET.HATEOAS.Hypermedia;
+using RestWithASPNET.HATEOAS.Hypermedia.Abstract;
 using System.Text.Json.Serialization;
 
 namespace RestWithASPNET.Data.VO

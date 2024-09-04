@@ -1,6 +1,6 @@
 ﻿using RestWithASPNET.Data.Converter.Business;
 using RestWithASPNET.Data.VO;
-using RestWithASPNET.Hypermedia.Utils;
+using RestWithASPNET.HATEOAS.Hypermedia.Utils;
 using RestWithASPNET.Model;
 using RestWithASPNET.Repository;
 

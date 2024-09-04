@@ -10,18 +10,14 @@ using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using RestWithASPNET.Business;
 using RestWithASPNET.Configurations;
-using RestWithASPNET.Data.VO;
-using RestWithASPNET.Hypermedia.Enricher;
-using RestWithASPNET.Hypermedia.Filters;
+using RestWithASPNET.HATEOAS.Hypermedia.Filters;
+using RestWithASPNET.HATEOAS.Hypermedia.Enricher;
 using RestWithASPNET.Model.Context;
 using RestWithASPNET.Repository;
 using RestWithASPNET.Repository.Base;
 using RestWithASPNET.Services;
 using Serilog;
-using System.Diagnostics.Metrics;
-using System.Reflection.Metadata;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RestWithASPNET
 {

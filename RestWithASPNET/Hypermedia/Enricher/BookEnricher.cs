@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET.Data.VO;
-using RestWithASPNET.Hypermedia.Constants;
+using RestWithASPNET.HATEOAS.Hypermedia;
+using RestWithASPNET.HATEOAS.Hypermedia.Constants;
 using System.Text;
 
-namespace RestWithASPNET.Hypermedia.Enricher
+namespace RestWithASPNET.HATEOAS.Hypermedia.Enricher
 {
 	public class BookEnricher : ContentResponseEnricher<BookVO>
 	{
