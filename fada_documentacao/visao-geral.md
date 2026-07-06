@@ -144,6 +144,7 @@ RestWithASPNET/
 ├── db/
 │   └── Dockerfile               # Configuração Docker do MySQL
 ├── docker-compose.yml           # Orquestração de containers
+├── temporary_file.txt           # Arquivo temporário para testes
 └── README.md
 ```
 
@@ -287,3 +288,7 @@ O projeto utiliza **GitHub Actions** para integração contínua, com badge de s
 ---
 
 **Observação**: Este é um projeto educacional baseado no curso da Udemy sobre REST APIs com ASP.NET Core, demonstrando boas práticas de desenvolvimento de APIs RESTful modernas.
+
+---
+
+**Última atualização**: 06/07/2026
